@@ -29,18 +29,3 @@ Open terminal or command prompt inside this folder and run:
 python tictactoe_ai.py
 ```
 
----
-
-## 4. Key AI Concepts for Viva & Exam
-
-### Q1: What is the Minimax algorithm?
-> **Answer:** Minimax is a recursive backtracking algorithm used in two-player, turn-based, zero-sum games. It assumes both players make optimal moves. The AI acts as the **Maximizer** (trying to get the highest score), while the opponent acts as the **Minimizer** (trying to minimize the AI's score).
-
-### Q2: What is Alpha-Beta Pruning?
-> **Answer:** Alpha-Beta pruning is an optimization technique for Minimax that eliminates branches of the search tree that cannot influence the final decision.
-> - **$\alpha$ (Alpha):** The best (highest) score guaranteed to the Maximizer so far.
-> - **$\beta$ (Beta):** The best (lowest) score guaranteed to the Minimizer so far.
-> - **Condition:** If $\beta \le \alpha$, the remaining child nodes in that subtree are pruned (cut off).
-
-### Q3: Why does this app display "Nodes explored"?
-> **Answer:** The node counter proves that Alpha-Beta pruning is working. Without pruning, Minimax evaluates thousands of nodes; with pruning, it evaluates significantly fewer states while achieving the exact same optimal move.
