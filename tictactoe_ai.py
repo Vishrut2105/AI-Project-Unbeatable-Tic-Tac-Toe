@@ -17,9 +17,15 @@ class TicTacToeAI:
     def __init__(self, root):
         self.root = root
         self.root.title("AI Tic-Tac-Toe (Minimax + Alpha-Beta Pruning)")
-        self.root.geometry("420x520")
-        self.root.resizable(False, False)
+        self.root.geometry("450x600")
+        self.root.minsize(420, 580)
+        self.root.resizable(True, True)
         self.root.configure(bg="#1e1e2e")
+
+        # Score tracking across retries
+        self.human_score = 0
+        self.ai_score = 0
+        self.draws = 0
 
         # Board state: list of 9 elements ('X', 'O', or ' ')
         self.board = [EMPTY] * 9
@@ -41,7 +47,17 @@ class TicTacToeAI:
             bg="#1e1e2e",
             fg="#cdd6f4"
         )
-        self.title_label.pack(pady=(15, 5))
+        self.title_label.pack(pady=(12, 2))
+
+        # Scoreboard
+        self.score_label = tk.Label(
+            self.root,
+            text="You (O): 0  |  AI (X): 0  |  Draws: 0",
+            font=("Helvetica", 11, "bold"),
+            bg="#1e1e2e",
+            fg="#f9e2af"
+        )
+        self.score_label.pack(pady=(0, 4))
 
         # Status Label
         self.status_label = tk.Label(
@@ -51,7 +67,7 @@ class TicTacToeAI:
             bg="#1e1e2e",
             fg="#a6adc8"
         )
-        self.status_label.pack(pady=(0, 10))
+        self.status_label.pack(pady=(0, 8))
 
         # 3x3 Grid Frame
         self.grid_frame = tk.Frame(self.root, bg="#313244", padx=10, pady=10)
@@ -62,7 +78,7 @@ class TicTacToeAI:
             btn = tk.Button(
                 self.grid_frame,
                 text="",
-                font=("Helvetica", 26, "bold"),
+                font=("Helvetica", 24, "bold"),
                 width=4,
                 height=2,
                 bg="#45475a",
@@ -83,22 +99,26 @@ class TicTacToeAI:
             bg="#1e1e2e",
             fg="#9399b2"
         )
-        self.info_label.pack(pady=(12, 5))
+        self.info_label.pack(pady=(10, 4))
 
-        # Control Frame (Reset Button)
+        # Reset / Retry Button Frame
+        self.btn_frame = tk.Frame(self.root, bg="#1e1e2e")
+        self.btn_frame.pack(pady=10)
+
         self.reset_btn = tk.Button(
-            self.root,
-            text="Restart Game",
+            self.btn_frame,
+            text="🔄 Reset / Play Again",
             font=("Helvetica", 12, "bold"),
             bg="#89b4fa",
             fg="#11111b",
             activebackground="#b4befe",
-            padx=15,
-            pady=6,
+            padx=18,
+            pady=8,
+            cursor="hand2",
             relief="flat",
             command=self.reset_game
         )
-        self.reset_btn.pack(pady=10)
+        self.reset_btn.pack(side="left", padx=5)
 
     # ---------------- Game Logic ----------------
     def check_winner(self, board):
@@ -158,15 +178,30 @@ class TicTacToeAI:
 
     def handle_game_end(self, winner):
         self.game_over = True
+        result_message = ""
+
         if winner == "Tie":
+            self.draws += 1
             self.status_label.config(text="Game Tied!")
-            messagebox.showinfo("Result", "It's a Draw! Good effort.")
+            result_message = "It's a Draw! Both sides played optimally."
         elif winner == AI:
+            self.ai_score += 1
             self.status_label.config(text="AI (X) Wins!")
-            messagebox.showinfo("Result", "AI Wins! (Minimax is unbeatable)")
+            result_message = "AI (X) Wins! Minimax chose the optimal path."
         else:
+            self.human_score += 1
             self.status_label.config(text="You Win!")
-            messagebox.showinfo("Result", "Congratulations, you won!")
+            result_message = "Congratulations, you won!"
+
+        # Update scoreboard
+        self.score_label.config(
+            text=f"You (O): {self.human_score}  |  AI (X): {self.ai_score}  |  Draws: {self.draws}"
+        )
+
+        # Ask to retry immediately
+        retry = messagebox.askyesno("Game Over", f"{result_message}\n\nWould you like to retry and play again?")
+        if retry:
+            self.reset_game()
 
     # ---------------- Minimax with Alpha-Beta Pruning ----------------
     def minimax(self, board, depth, is_maximizing, alpha, beta):
