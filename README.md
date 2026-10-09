@@ -3,7 +3,7 @@
 **Course:** B.Tech Information Technology (Semester V)  
 **Subject:** Artificial Intelligence (Course Code: 202044503)  
 **Topic:** Unit 3 - Game Playing & Planning / Practical #9  
-**Team:** Vishrut Sharma(12402080601153), Yatharth Metha(12402080601160), Ved Tailor(1240208060
+**Team:** Vishrut Sharma(12402080601153), Yatharth Metha(12402080601160), Ved Tailor(12402080601145)
 ---
 
 ## 1. Project Overview
