@@ -3,7 +3,7 @@
 **Course:** B.Tech Information Technology (Semester V)  
 **Subject:** Artificial Intelligence (Course Code: 202044503)  
 **Topic:** Unit 3 - Game Playing & Planning / Practical #9  
-
+**Team:** Vishrut Sharma(12402080601153), Yatharth Metha(12402080601160), Ved Tailor(1240208060
 ---
 
 ## 1. Project Overview
@@ -21,6 +21,9 @@ Because Tic-Tac-Toe is a zero-sum, complete information game, the AI evaluates a
 ---
 
 ## 3. How to Run the Project
+> - Step 1 Download the file
+> - Step 2 open the folder in VS Code
+> - Step 3 open the terminal and run the command below 
 Open terminal or command prompt inside this folder and run:
 ```bash
 python tictactoe_ai.py
